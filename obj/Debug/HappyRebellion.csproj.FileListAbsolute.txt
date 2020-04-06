@@ -1,0 +1,7 @@
+C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\Debug\HappyRebellion.csproj.CoreCompileInputs.cache
+A:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\HappyRebellion\bin\Win64_Shipping_Client\HappyRebellion.dll
+A:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\HappyRebellion\bin\Win64_Shipping_Client\HappyRebellion.pdb
+C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\Debug\HappyRebellion.csproj.CopyComplete
+C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\Debug\HappyRebellion.dll
+C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\Debug\HappyRebellion.pdb
+C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\Debug\HappyRebellion.csprojAssemblyReference.cache

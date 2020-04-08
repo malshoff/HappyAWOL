@@ -3,3 +3,5 @@
 obj/
 obj\
 obj
+*.cache
+obj/x64/Debug/DesignTimeResolveAssemblyReferencesInput.cache

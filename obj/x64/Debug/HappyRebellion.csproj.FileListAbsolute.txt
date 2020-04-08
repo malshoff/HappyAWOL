@@ -1,3 +1,0 @@
-C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\x64\Debug\HappyRebellion.pdb
-C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\x64\Debug\HappyRebellion.csproj.CoreCompileInputs.cache
-C:\Users\malsh\Documents\Dev\Mod\Bannerlord\HappyAWOL\HappyAWOL\obj\x64\Debug\HappyRebellion.dll

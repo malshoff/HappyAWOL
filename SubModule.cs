@@ -35,5 +35,9 @@ namespace HappyRebellion {
             }
 
         }
+
+        protected override void OnBeforeInitialModuleScreenSetAsRoot() {
+            InformationManager.DisplayMessage(new InformationMessage("HappyRebellion Loaded!", Color.FromUint(0xffbd_2b8d)));
+        }
     }
 }

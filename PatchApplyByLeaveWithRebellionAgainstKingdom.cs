@@ -5,7 +5,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 
 namespace HappyRebellion {
-    [HarmonyPatch(typeof(ChangeKingdomAction), "ApplyByLeaveWithRebellionAgainstKingdom")]
+    //[HarmonyPatch(typeof(ChangeKingdomAction), "ApplyByLeaveWithRebellionAgainstKingdom")]
     class PatchApplyByLeaveWithRebellionAgainstKingdom {
         public static bool Prefix(Clan clan, Kingdom newKingdom, bool showNotification = true) {
             var applyInternal = typeof(ChangeKingdomAction).GetMethod("ApplyInternal", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);

@@ -1,13 +1,10 @@
 ﻿using HarmonyLib;
 using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
-using Config.Net;
-using HappyRebellion.Config;
-using System.IO;
 using TaleWorlds.Library;
+using TaleWorlds.CampaignSystem.Actions;
 
 namespace HappyRebellion {
     public class SubModule : MBSubModuleBase {
@@ -19,7 +16,16 @@ namespace HappyRebellion {
 
             System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.ForfeitSettlementsRelationsChange.ToString());
             System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.RebellionRelationsChange.ToString());
+            //Type[] enumValue = typeof(ChangeKingdomAction).GetNestedTypes(System.Reflection.BindingFlags.NonPublic);
 
+            /*
+                foreach (var e in enumValue) {
+                System.Diagnostics.Debug.WriteLine(e.ToString());
+            }
+            */
+
+            Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
+            object val = (int)Enum.ToObject(type, 1);
             try {
                 
                 var h = new Harmony("happyrebellion");

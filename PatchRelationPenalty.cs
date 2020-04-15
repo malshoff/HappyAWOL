@@ -1,21 +1,32 @@
 ﻿using HarmonyLib;
 using Helpers;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Windows.Forms;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Library;
 
 namespace HappyRebellion {
+   
 
     [HarmonyPatch(typeof(ChangeKingdomAction), "ApplyInternal")]
     public class PatchRelationPenalty {
-       static void Prefix(Clan clan, Kingdom kingdom, int detail, int awardMultiplier, bool byRebellion, bool showNotification) {
-            //MessageBox.Show($"Detail: {detail}");
+       
+
+        static bool Prefix(Clan clan, Kingdom kingdom, int detail, int awardMultiplier, bool byRebellion, bool showNotification) {
+            MessageBox.Show($"Detail: {detail}");
 
             var onClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var onMercenaryClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnMercenaryClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        
+            Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
+            int joinMerc = (int)Enum.ToObject(type, 0);
+            int joinKingdom = (int)Enum.ToObject(type, 1);
+            int leaveKingdom = (int)Enum.ToObject(type, 2);
+            int leaveRebellion = (int)Enum.ToObject(type, 3);
+            int leaveMerc = (int)Enum.ToObject(type, 4);
+           
             Kingdom oldKingdom = clan.Kingdom;
             if (kingdom != null) {
                 foreach (Kingdom kingdom3 in Kingdom.All) {
@@ -30,7 +41,7 @@ namespace HappyRebellion {
                     }
                 }
             }
-            if (detail == 1) { //ChangeKingdomActionDetail.JoinKingdom
+            if (detail == joinKingdom) { //ChangeKingdomActionDetail.JoinKingdom
                 object[] additionalArgs = new object[] { clan, oldKingdom, kingdom, false };
                 StatisticsDataLogHelper.AddLog(StatisticsDataLogHelper.LogAction.ChangeKingdomAction, additionalArgs);
                 clan.IsUnderMercenaryService = false;
@@ -40,7 +51,7 @@ namespace HappyRebellion {
                 clan.ClanJoinFaction(kingdom);
                 onClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, oldKingdom, clan.Kingdom, byRebellion, showNotification });
             }
-            else if (detail == 0) { //ChangeKingdomActionDetail.JoinAsMercenary
+            else if (detail == joinMerc) { //ChangeKingdomActionDetail.JoinAsMercenary
                 object[] additionalArgs = new object[] { clan, oldKingdom, kingdom, false };
                 StatisticsDataLogHelper.AddLog(StatisticsDataLogHelper.LogAction.ChangeKingdomAction, additionalArgs);
                 if (clan.IsUnderMercenaryService) {
@@ -52,15 +63,15 @@ namespace HappyRebellion {
                 //CampaignEventDispatcher.Instance.OnMercenaryClanChangedKingdom(clan, null, kingdom);
                 onMercenaryClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, null, kingdom });
             }
-            else if (detail == 3 || detail == 2 || detail == 4 ){ //ChangeKingdomActionDetail.LeaveAsMercenary = 4
+            else if (detail == leaveRebellion || detail == leaveKingdom || detail == leaveMerc ){ //ChangeKingdomActionDetail.LeaveAsMercenary = 4
                 object[] additionalArgs = new object[] { clan, oldKingdom, kingdom, true };
                 StatisticsDataLogHelper.AddLog(StatisticsDataLogHelper.LogAction.ChangeKingdomAction, additionalArgs);
                 clan.ClanLeaveKingdom(false);
-                if (detail == 4) { //ChangeKingdomActionDetail.LeaveAsMercenary
+                if (detail == leaveMerc) { //ChangeKingdomActionDetail.LeaveAsMercenary
                     onMercenaryClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, kingdom, null });
                     clan.IsUnderMercenaryService = false;
                 }
-                if (detail == 3 ) { //ChangeKingdomActionDetail.LeaveWithRebellion
+                if (detail == leaveRebellion ) { //ChangeKingdomActionDetail.LeaveWithRebellion
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan3 in oldKingdom.Clans) {
                             ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan3.Leader, SharedObjects.Settings.RebellionRelationsChange, true);
@@ -70,7 +81,7 @@ namespace HappyRebellion {
                     }
                     onClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, oldKingdom, null, true,true });
                 }
-                else if (detail == 2) { //ChangeKingdomActionDetail.LeaveKingdom
+                else if (detail == leaveKingdom) { //ChangeKingdomActionDetail.LeaveKingdom
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan4 in oldKingdom.Clans) {
                             ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan4.Leader, SharedObjects.Settings.ForfeitSettlementsRelationsChange, true);
@@ -98,6 +109,7 @@ namespace HappyRebellion {
             }
             typeof(ChangeKingdomAction).GetMethod("CheckIfPartyIconIsDirty", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic)
             .Invoke(null, new object[] { clan, kingdom });
+            return false;
         }
 
     }

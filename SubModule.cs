@@ -14,8 +14,8 @@ namespace HappyRebellion {
             base.OnSubModuleLoad();
             
 
-            System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.ForfeitSettlementsRelationsChange.ToString());
-            System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.RebellionRelationsChange.ToString());
+            //System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.ForfeitSettlementsRelationsChange.ToString());
+            //System.Diagnostics.Debug.WriteLine(SharedObjects.Settings.RebellionRelationsChange.ToString());
             //Type[] enumValue = typeof(ChangeKingdomAction).GetNestedTypes(System.Reflection.BindingFlags.NonPublic);
 
             /*
@@ -24,8 +24,8 @@ namespace HappyRebellion {
             }
             */
 
-            Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
-            object val = (int)Enum.ToObject(type, 1);
+            //Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
+            //object val = (int)Enum.ToObject(type, 1);
             try {
                 
                 var h = new Harmony("happyrebellion");

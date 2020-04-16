@@ -8,22 +8,20 @@ namespace HappyRebellion {
         public override string ModName => "Happy Rebellion";
         public override string ModuleFolderName => "HappyRebellion";
 
-        [SettingProperty("Enabled", "")]
+        [SettingProperty("Enabled", hintText: "")]
         [SettingPropertyGroup("General")]
         public bool Enabled { get; set; } = true;
 
-        [SettingProperty("Rebellion Relations Change", "Relation change when you do not give up your settlements when leaving. (Can be negative)")]
+        [SettingProperty("Rebellion Relations Change", 0, 100, hintText: "Relation change when you do not give up your settlements when leaving. (Can be negative)")]
         [SettingPropertyGroup("General")]
         public int RebellionRelationsChange { get; set; } = 0;
 
-        [SettingProperty("Forfeit Fiefs Relations Change", "Relation change when you give up your settlements when leaving. (Can be negative)")]
+        [SettingProperty("Forfeit Fiefs Relations Change", 0, 100, hintText: "Relation change when you give up your settlements when leaving. (Can be negative)")]
         [SettingPropertyGroup("General")]
         public int ForfeitSettlementsRelationsChange { get; set; } = 0;
 
-        [SettingProperty("Declare War On Rebellion", "Does leaving a kingdom with your fiefs cause them to declare war on you?")]
+        [SettingProperty("Declare War On Rebellion", hintText: "Does leaving a kingdom with your fiefs cause them to declare war on you?")]
         [SettingPropertyGroup("General")]
         public bool DeclareWarOnRebellion { get; set; } = false;
-
-
     }
 }

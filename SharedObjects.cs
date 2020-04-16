@@ -1,35 +1,37 @@
-﻿using System;
+﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Config.Net;
-using HappyRebellion.Config;
+
 using TaleWorlds.Library;
 
 namespace HappyRebellion {
-    public class SharedObjects {
+    public class SharedObjects: AttributeSettings<SharedObjects> {
         
-        private static SharedObjects _instance;
-        public static SharedObjects Instance => _instance ?? (_instance = new SharedObjects());
+        public override string Id { get; set; } = "heromal.HappyRebellion_v1";
+        public override string ModName => "Hsppy Rebellion";
+        public override string ModuleFolderName => "heromal.HappyRebellion";
 
-        public static IMySettings Settings = loadSettings();
+        [SettingProperty("Enabled", "")]
+        [SettingPropertyGroup("General")]
+        public bool Enabled { get; set; } = true;
 
-        private static IMySettings loadSettings() {
-            string path = Path.Combine(BasePath.Name, "Modules", "HappyRebellion");
-            if (!Directory.Exists(path))
-                throw new Exception("Cannot find the module named HappyRebellion");
-            path = Path.Combine(path, "ModuleData","Config" );
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-            path = Path.Combine(path, "config.ini");
-            if (!File.Exists(path)) 
-                throw new Exception($"No config file found at path {path}");
+        [SettingProperty("Rebellion Relations Change", "Relation change when you do not give up your settlements when leaving. (Can be negative)")]
+        [SettingPropertyGroup("General")]
+        public int RebellionRelationsChange { get; set; } = 0;
 
-            return new ConfigurationBuilder<IMySettings>()
-            .UseIniFile(path)
-            .Build();
-}
+        [SettingProperty("Forfeit Fiefs Relations Change", "Relation change when you give up your settlements when leaving. (Can be negative)")]
+        [SettingPropertyGroup("General")]
+        public int ForfeitSettlementsRelationsChange { get; set; } = 0;
+
+        [SettingProperty("Declare War On Rebellion", "Does leaving a kingdom with your fiefs cause them to declare war on you?")]
+        [SettingPropertyGroup("General")]
+        public bool DeclareWarOnRebellion { get; set; } = false;
+
+
     }
 }

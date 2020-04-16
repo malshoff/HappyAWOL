@@ -17,10 +17,11 @@ namespace HappyRebellion {
 
         static bool Prefix(Clan clan, Kingdom kingdom, int detail, int awardMultiplier, bool byRebellion, bool showNotification) {
             //MessageBox.Show($"Detail: {detail}");
-
+            var settings = new SharedObjects();
             var onClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var onMercenaryClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnMercenaryClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
+
             int joinMerc = (int)Enum.ToObject(type, 0);
             int joinKingdom = (int)Enum.ToObject(type, 1);
             int leaveKingdom = (int)Enum.ToObject(type, 2);
@@ -74,9 +75,9 @@ namespace HappyRebellion {
                 if (detail == leaveRebellion ) { //ChangeKingdomActionDetail.LeaveWithRebellion
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan3 in oldKingdom.Clans) {
-                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan3.Leader, SharedObjects.Settings.RebellionRelationsChange, true);
+                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan3.Leader, settings.RebellionRelationsChange, true);
                         }
-                        if(SharedObjects.Settings.DeclareWarOnRebellion)
+                        if(settings.DeclareWarOnRebellion)
                             DeclareWarAction.Apply(oldKingdom, clan);
                     }
                     onClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, oldKingdom, null, true,true });
@@ -84,7 +85,7 @@ namespace HappyRebellion {
                 else if (detail == leaveKingdom) { //ChangeKingdomActionDetail.LeaveKingdom
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan4 in oldKingdom.Clans) {
-                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan4.Leader, SharedObjects.Settings.ForfeitSettlementsRelationsChange, true);
+                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan4.Leader, settings.ForfeitSettlementsRelationsChange, true);
                         }
                     }
                     foreach (Settlement settlement in new List<Settlement>(clan.Settlements)) {

@@ -1,20 +1,12 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Settings;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using TaleWorlds.Library;
 
 namespace HappyRebellion {
-    public class SharedObjects: AttributeSettings<SharedObjects> {
-        
+    public class SharedObjects : AttributeSettings<SharedObjects> {
+
         public override string Id { get; set; } = "heromal.HappyRebellion_v1";
-        public override string ModName => "Hsppy Rebellion";
-        public override string ModuleFolderName => "heromal.HappyRebellion";
+        public override string ModName => "Happy Rebellion";
+        public override string ModuleFolderName => "HappyRebellion";
 
         [SettingProperty("Enabled", "")]
         [SettingPropertyGroup("General")]

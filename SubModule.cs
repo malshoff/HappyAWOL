@@ -13,11 +13,14 @@ namespace HappyRebellion {
             base.OnSubModuleLoad();
 
             try {
-
+                
+                
                 var h = new Harmony("happyrebellion");
+                
                 h.PatchAll();
                 //MessageBox.Show("Loaded Harmony Patch");
                 /*
+                
                 foreach (var method in methods) {
                     System.Diagnostics.Debug.WriteLine(method.ToString()); 
                 }*/

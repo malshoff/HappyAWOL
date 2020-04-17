@@ -12,15 +12,15 @@ namespace HappyRebellion {
         [SettingPropertyGroup("General")]
         public bool Enabled { get; set; } = true;
 
-        [SettingProperty("Rebellion Relations Change", 0, 100, hintText: "Relation change when you do not give up your settlements when leaving. (Can be negative)")]
+        [SettingProperty("Rebellion Relations Change", -100, 0,false, "Relation change when you do not give up your settlements when leaving.")]
         [SettingPropertyGroup("General")]
         public int RebellionRelationsChange { get; set; } = 0;
 
-        [SettingProperty("Forfeit Fiefs Relations Change", 0, 100, hintText: "Relation change when you give up your settlements when leaving. (Can be negative)")]
+        [SettingProperty("Forfeit Fiefs Relations Change", -100, 0, requireRestart: false, hintText: "Relation change when you give up your settlements when leaving.")]
         [SettingPropertyGroup("General")]
         public int ForfeitSettlementsRelationsChange { get; set; } = 0;
 
-        [SettingProperty("Declare War On Rebellion", hintText: "Does leaving a kingdom with your fiefs cause them to declare war on you?")]
+        [SettingProperty("Declare War On Rebellion", false , hintText: "Does leaving a kingdom with your fiefs cause them to declare war on you?")]
         [SettingPropertyGroup("General")]
         public bool DeclareWarOnRebellion { get; set; } = false;
     }

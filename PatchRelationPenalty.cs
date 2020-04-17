@@ -2,6 +2,7 @@
 using Helpers;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Library;
@@ -15,7 +16,8 @@ namespace HappyRebellion {
 
         static bool Prefix(Clan clan, Kingdom kingdom, int detail, int awardMultiplier, bool byRebellion, bool showNotification) {
             //MessageBox.Show($"Detail: {detail}");
-            var settings = new SharedObjects();
+            //MessageBox.Show(SharedObjects.Instance.RebellionRelationsChange.ToString());
+          
             var onClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             var onMercenaryClanChangedKingdom = typeof(CampaignEventDispatcher).GetMethod("OnMercenaryClanChangedKingdom", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             Type type = typeof(ChangeKingdomAction).Assembly.GetType("TaleWorlds.CampaignSystem.Actions.ChangeKingdomAction+ChangeKingdomActionDetail");
@@ -73,9 +75,9 @@ namespace HappyRebellion {
                 if (detail == leaveRebellion) { //ChangeKingdomActionDetail.LeaveWithRebellion
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan3 in oldKingdom.Clans) {
-                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan3.Leader, settings.RebellionRelationsChange, true);
+                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan3.Leader, SharedObjects.Instance.RebellionRelationsChange, true);
                         }
-                        if (settings.DeclareWarOnRebellion)
+                        if (SharedObjects.Instance.DeclareWarOnRebellion)
                             DeclareWarAction.Apply(oldKingdom, clan);
                     }
                     onClanChangedKingdom.Invoke(CampaignEventDispatcher.Instance, new object[] { clan, oldKingdom, null, true, true });
@@ -83,7 +85,7 @@ namespace HappyRebellion {
                 else if (detail == leaveKingdom) { //ChangeKingdomActionDetail.LeaveKingdom
                     if (object.ReferenceEquals(clan, Clan.PlayerClan)) {
                         foreach (Clan clan4 in oldKingdom.Clans) {
-                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan4.Leader, settings.ForfeitSettlementsRelationsChange, true);
+                            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(clan.Leader, clan4.Leader, SharedObjects.Instance.ForfeitSettlementsRelationsChange, true);
                         }
                     }
                     foreach (Settlement settlement in new List<Settlement>(clan.Settlements)) {

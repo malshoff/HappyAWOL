@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "HappyRebellion": {
+      "commandName": "Project",
+      "commandLineArgs": "/singleplayer _MODULES_*Native*SandBoxCore*CustomBattle*SandBox*StoryMode*HappyRebellion*_MODULES_",
+      "workingDirectory": "A:\\Steam\\steamapps\\common\\Mount & Blade II Bannerlord\\bin\\Win64_Shipping_Client"
+    }
+  }
+}
